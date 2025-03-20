@@ -1,0 +1,12 @@
+model:
+  vocabulary_size: 50000
+  embedding_size: 768
+  training_seq_len: 128
+  need_padding: False
+  padding_token: 0
+  nlayer: [3,3]
+  nhead: 12
+  ndim: 768
+  ndim_feedforward: 2048
+  drop_out: 0.1
+  pre_norm: True
