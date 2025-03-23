@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from Transformer import Transformer
-import utils
+from . import utils
 
 class GPT(nn.Module):
     def __init__(self,
