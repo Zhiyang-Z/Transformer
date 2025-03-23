@@ -19,10 +19,27 @@ def gen_pos_encoding(max_len:int, dim: int) -> torch.tensor:
     pos_encoding[:,::2], pos_encoding[:,1::2] = torch.sin(degree), torch.cos(degree)
     return pos_encoding
 
+def gen_padding_mask_for_self_attention(padding_mask: torch.tensor) -> torch.tensor:
+    assert padding_mask.ndim == 2 # padding_mask shape: [batch_size, length]
+    length = padding_mask.shape[1]
+    padding_mask = padding_mask.unsqueeze(1).repeat(1, length, 1) # padding_mask shape: [batch_size, length, length]
+    padding_mask = padding_mask | padding_mask.transpose(1, 2)
+    """
+    padding_mask looks like: [False, False, False, True, True]
+                             [False, False, False, True, True]
+                             [False, False, False, True, True]
+                             [True,  True,  True,  True, True]
+                             [True,  True,  True,  True, True]
+    """
+    return padding_mask # shape: [batch_size, length, length]
+    
+
 # test
 if __name__ == '__main__':
     print(gen_attn_mask(7))
-    print(gen_padding_mask(torch.tril(torch.ones(7,7)), 0))
+    padding_mask = gen_padding_mask(torch.tensor([[1,2,3,0], [4,5,0,0]]), 0)
+    padding_mask_for_self_att = gen_padding_mask_for_self_attention(padding_mask)
+    print(padding_mask_for_self_att)
     import matplotlib.pyplot as plt
     pos_encoding = gen_pos_encoding(100, 768)
     cax = plt.matshow(pos_encoding)
