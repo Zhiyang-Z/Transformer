@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-import utils
+from . import utils
 
 class AttentionBlock(nn.Module):
     def __init__(self, ):
