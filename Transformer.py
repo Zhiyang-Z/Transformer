@@ -43,8 +43,8 @@ class MultiHeadAttention(nn.Module):
                    k.split(split_dim, dim=2),
                    v.split(split_dim, dim=2))
         q, k, v = (torch.stack(q, dim=1),
-                   torch.stack(q, dim=1),
-                   torch.stack(q, dim=1))
+                   torch.stack(k, dim=1),
+                   torch.stack(v, dim=1))
         # phase 3: invoke attention module
         att_out = self.att(q, k, v, att_mask, padding_mask)
         # concat heads.

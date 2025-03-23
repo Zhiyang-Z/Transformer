@@ -18,14 +18,13 @@ class GPT(nn.Module):
         self.training_seq_len = training_seq_len
         self.embedding = nn.Embedding(vocabulary_size, embedding_size)
         # decoder_only transformer
-        self.model = Transformer(vocabulary_size=vocabulary_size,
+        self.model = Transformer.Transformer(vocabulary_size=vocabulary_size,
                                  mode='encoder_only',
                                  nlayer=nlayer,
                                  nhead=nhead,
                                  ndim=ndim,
                                  ndim_feedforward=ndim_feedforward,
-                                 drop_out=drop_out,
-                                 pre_norm=pre_norm)
+                                 drop_out=drop_out)
         # cache attention mask and positional encoding.
         self.register_buffer('attn_mask', utils.gen_attn_mask(self.training_seq_len))
         self.register_buffer('pos_encoding', utils.gen_pos_encoding(10000, ndim))
