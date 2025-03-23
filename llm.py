@@ -32,8 +32,8 @@ class GPT(nn.Module):
         self._ini_para()
 
     def _ini_para(self):
-        for name, module in self.named_modules():
-            print(f'{name}: {module.__class__.__name__}')
+        # for name, module in self.named_modules():
+        #     print(f'{name}: {module.__class__.__name__}')
         print('embedding initializing...')
         for m in self.modules():
             if isinstance(m, nn.Embedding): nn.init.normal_(m.weight, mean=0, std=0.02)
